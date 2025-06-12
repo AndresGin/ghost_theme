@@ -1,0 +1,22 @@
+name: Deploy Theme
+on:
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Clonar el repositorio
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Paso 2: Desplegar el tema de Ghost
+      - name: Deploy Ghost Theme
+        uses: TryGhost/action-deploy-theme@v1
+        with:
+          api-url: ${{ secrets.GHOST_ADMIN_API_URL }}  # Usar el secreto con la URL de la API
+          api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}  # Usar el secreto con la API Key
