@@ -17,7 +17,7 @@ jobs:
 
       # Paso 2: Desplegar el tema de Ghost
       - name: Deploy Ghost Theme
-        uses: TryGhost/action-deploy-theme@v1
+        uses: reverentgeek/action-deploy-theme@main
         with:
           api-url: ${{ secrets.GHOST_ADMIN_API_URL }}  # Usar el secreto con la URL de la API
           api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}  # Usar el secreto con la API Key 
