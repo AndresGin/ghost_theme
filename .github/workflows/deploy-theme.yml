@@ -20,4 +20,5 @@ jobs:
         uses: TryGhost/action-deploy-theme@v1
         with:
           api-url: ${{ secrets.GHOST_ADMIN_API_URL }}  # Usar el secreto con la URL de la API
-          api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}  # Usar el secreto con la API Key
+          api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}  # Usar el secreto con la API Key 
+          working-directory: themes/Casper-main
