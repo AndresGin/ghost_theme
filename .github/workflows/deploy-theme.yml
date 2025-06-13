@@ -1,24 +1,29 @@
-name: Deploy Theme
+name: Deploy Ghost Theme (manual)
 
 on:
   push:
     branches:
-      - master
       - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Clonar el repositorio
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      # Paso 2: Desplegar el tema de Ghost
-      - name: Deploy Ghost Theme
-        uses: TryGhost/action-deploy-theme@v1.6.6
-        with:
-          api-url: ${{ secrets.GHOST_ADMIN_API_URL }}  # Usar el secreto con la URL de la API
-          api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}  # Usar el secreto con la API Key 
-          working-directory: themes/Casper-main
+      - name: Zip theme folder
+        run: |
+          cd themes/Casper-main
+          zip -r ../../theme.zip .
+
+      - name: Deploy theme to Ghost
+        env:
+          GHOST_ADMIN_API_URL: ${{ secrets.GHOST_ADMIN_API_URL }}
+          GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
+        run: |
+          curl -X POST "$GHOST_ADMIN_API_URL/ghost/api/admin/themes/upload/" \
+            -H "Authorization: GhostAdminAPIKey $GHOST_ADMIN_API_KEY" \
+            -F "file=@theme.zip"
